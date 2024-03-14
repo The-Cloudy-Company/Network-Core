@@ -1,0 +1,12 @@
+name: TCC_Core
+version: '${project.version}'
+main: cc.leafed.tcc_core.TCC_Core
+api-version: '1.20'
+author: Aduhkiss
+commands:
+  portal:
+    description: Server Selection GUI
+    permission: thecloudyco.portal
+permissions:
+  thecloudyco.portal:
+    default: true

@@ -1,0 +1,17 @@
+###########################################################################################
+#
+#                         THE CLOUDY COMPANY    CORE PLUGIN
+#                              CRAFTED BY ATTICUS ZAMBRANA
+#
+###########################################################################################
+
+database:
+  host: ''
+  port: 3306
+  database: ''
+  username: ''
+  password: ''
+
+server:
+  group: 'hub'
+  name: 'Hub'
