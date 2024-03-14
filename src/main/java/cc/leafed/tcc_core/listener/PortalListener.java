@@ -2,10 +2,9 @@ package cc.leafed.tcc_core.listener;
 
 import cc.leafed.tcc_core.TCC_Core;
 import cc.leafed.tcc_core.common.ServerData;
-import cc.leafed.tcc_core.common.ServerUtil;
+import com.thecloudyco.cc.util.ServerUtil;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

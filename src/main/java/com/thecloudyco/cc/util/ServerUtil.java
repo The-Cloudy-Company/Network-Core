@@ -1,5 +1,6 @@
-package cc.leafed.tcc_core.common;
+package com.thecloudyco.cc.util;
 
+import cc.leafed.tcc_core.common.ServerData;
 import com.thecloudyco.cc.database.CloverDatabase;
 import org.bukkit.Material;
 
