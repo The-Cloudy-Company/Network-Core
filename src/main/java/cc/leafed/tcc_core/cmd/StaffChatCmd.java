@@ -8,7 +8,6 @@ import com.google.common.io.ByteStreams;
 import com.google.gson.Gson;
 import com.thecloudyco.cc.util.StringUtil;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
