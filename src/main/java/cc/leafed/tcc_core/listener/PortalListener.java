@@ -1,6 +1,6 @@
 package cc.leafed.tcc_core.listener;
 
-import cc.leafed.tcc_core.TCC_Core;
+import cc.leafed.tcc_core.Core;
 import cc.leafed.tcc_core.common.ServerData;
 import com.thecloudyco.cc.util.ServerUtil;
 import com.google.common.io.ByteArrayDataOutput;
@@ -43,7 +43,7 @@ public class PortalListener implements Listener {
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("Connect");
             out.writeUTF(serverName);
-            ((Player)ev.getWhoClicked()).sendPluginMessage(TCC_Core.getCore(), "BungeeCord", out.toByteArray());
+            ((Player)ev.getWhoClicked()).sendPluginMessage(Core.getCore(), "BungeeCord", out.toByteArray());
 
         } catch(NullPointerException e) {}
     }

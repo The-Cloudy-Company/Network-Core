@@ -1,5 +1,6 @@
 package cc.leafed.tcc_core.membership;
 
+import cc.leafed.tcc_core.Core;
 import com.thecloudyco.cc.membership.Membership;
 import com.thecloudyco.cc.membership.MembershipType;
 import com.thecloudyco.cc.membership.MembershipUtil;
@@ -9,6 +10,8 @@ import com.thecloudyco.cc.database.CloverDatabase;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,7 +22,6 @@ public class MembershipListener implements Listener {
 
         boolean found = false;
         try {
-            //ResultSet result = CloverDatabase.query("SELECT * FROM `membership` WHERE `minecraft` = '" + ev.getPlayer().getUniqueId().toString() + "';");
             ResultSet result = CloverDatabase.query("SELECT * FROM `membership` WHERE `minecraft` = '" + ev.getUniqueId() + "';");
             while(result.next()) {
                 found = true;
@@ -56,14 +58,34 @@ public class MembershipListener implements Listener {
             ev.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, ChatColor.RED + "You have no active membership purchased for this account.");
             return;
         }
+    }
 
-        //ev.setJoinMessage("§8[§a+§8] §7" + ev.getPlayer().getName());
-        //ev.getPlayer().getUniqueId()
-//        new BukkitRunnable() {
-//            @Override
-//            public void run() {
-//
-//            }
-//        }.runTaskAsynchronously(cc.leafed.membership.Membership.getMe());
+    @EventHandler
+    public void onConnect(PlayerJoinEvent event) {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                try {
+                    ResultSet result = CloverDatabase.query("SELECT * FROM `membership` WHERE `minecraft` = '" + event.getPlayer().getUniqueId() + "';");
+                    Membership membership = null;
+                    while (result.next()) {
+                        membership = new Membership(result.getString("mbr_number"), result.getString("first_name"), result.getString("last_name"), result.getString("address"),
+                                result.getString("address_two"), result.getString("city"), result.getString("state"), result.getString("zip_code"),
+                                result.getString("phone_number"), result.getString("email"), result.getBoolean("is_employee"), result.getInt("points_balance"),
+                                result.getString("parent_mbrshp"), MembershipType.valueOf(result.getString("type")), result.getLong("expiration"),
+                                result.getLong("enrollment_date"), result.getString("added_by"), result.getLong("member_since"), result.getString("minecraft"));
+                    }
+                    long tenDaysInMillis = 10 * 24 * 60 * 60 * 1000;
+                    //TODO: Also check the payment system to see if the member has a payment card on file for auto-renewal.
+
+                    // if(membership.getExpiration() - System.currentTimeMillis() <= tenDaysInMillis && membership.getExpiration() - System.currentTimeMillis() > 0) {
+                    if(membership.getExpiration() - System.currentTimeMillis() <= tenDaysInMillis) {
+                        // Membership expires within the next 10 days
+                        // Let the member know that they are up for renewal, and how to renew their membership
+                        event.getPlayer().sendMessage("§6§lHEY! §r§6It looks like your membership is up for renewal! Renew today at: {Membership System Online}");
+                    }
+                } catch(SQLException ex) { ex.printStackTrace(); }
+            }
+        }.runTaskAsynchronously(Core.getCore());
     }
 }

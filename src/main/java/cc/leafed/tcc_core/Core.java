@@ -11,9 +11,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.SQLException;
 
-public final class TCC_Core extends JavaPlugin {
+public final class Core extends JavaPlugin {
 
-    private static TCC_Core core;
+    private static Core core;
 
     @Override
     public void onEnable() {
@@ -58,7 +58,7 @@ public final class TCC_Core extends JavaPlugin {
         getServer().getMessenger().unregisterOutgoingPluginChannel(this);
     }
 
-    public static TCC_Core getCore() {
+    public static Core getCore() {
         return core;
     }
 }

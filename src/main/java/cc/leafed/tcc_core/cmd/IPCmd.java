@@ -1,6 +1,6 @@
 package cc.leafed.tcc_core.cmd;
 
-import cc.leafed.tcc_core.TCC_Core;
+import cc.leafed.tcc_core.Core;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
@@ -29,7 +29,7 @@ public class IPCmd implements CommandExecutor, PluginMessageListener {
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("IPOther");
         out.writeUTF(target.getName());
-        sender.sendPluginMessage(TCC_Core.getCore(), "BungeeCord", out.toByteArray());
+        sender.sendPluginMessage(Core.getCore(), "BungeeCord", out.toByteArray());
         return true;
     }
 

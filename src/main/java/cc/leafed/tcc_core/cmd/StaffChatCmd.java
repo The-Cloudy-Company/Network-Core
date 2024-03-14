@@ -1,6 +1,6 @@
 package cc.leafed.tcc_core.cmd;
 
-import cc.leafed.tcc_core.TCC_Core;
+import cc.leafed.tcc_core.Core;
 import cc.leafed.tcc_core.common.StaffMessage;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
@@ -27,7 +27,7 @@ public class StaffChatCmd implements CommandExecutor, PluginMessageListener {
         Gson gson = new Gson();
         Player player = (Player) sender;
         String message = StringUtil.combine(args, 0);
-        String serverName = TCC_Core.getCore().getConfig().getString("server.name");
+        String serverName = Core.getCore().getConfig().getString("server.name");
 
         // First send the message to all staff members currently on this server
         for(Player pl : Bukkit.getOnlinePlayers()) {
@@ -56,7 +56,7 @@ public class StaffChatCmd implements CommandExecutor, PluginMessageListener {
         out.writeShort(msgbytes.toByteArray().length);
         out.write(msgbytes.toByteArray());
 
-        player.sendPluginMessage(TCC_Core.getCore(), "BungeeCord", out.toByteArray());
+        player.sendPluginMessage(Core.getCore(), "BungeeCord", out.toByteArray());
 
         return true;
     }

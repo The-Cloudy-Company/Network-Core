@@ -1,6 +1,6 @@
 name: TCC_Core
 version: '${project.version}'
-main: cc.leafed.tcc_core.TCC_Core
+main: cc.leafed.tcc_core.Core
 api-version: '1.20'
 author: Aduhkiss
 commands:

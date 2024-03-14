@@ -6,7 +6,7 @@
 
 package com.thecloudyco.cc.database;
 
-import cc.leafed.tcc_core.TCC_Core;
+import cc.leafed.tcc_core.Core;
 
 import java.sql.*;
 
@@ -54,7 +54,7 @@ public class CloverDatabase {
         if(minecraft) {
             //minecraft_connection = DriverManager.getConnection("jdbc:mysql://10.0.0.28:3306/terminal", "ccl", "kPSKuLO7L0fMT5fA");
         } else {
-            conn = DriverManager.getConnection("jdbc:mysql://" + TCC_Core.getCore().getConfig().getString("database.host") + ":" + TCC_Core.getCore().getConfig().getInt("database.port") + "/" + TCC_Core.getCore().getConfig().getString("database.database"), TCC_Core.getCore().getConfig().getString("database.username"), TCC_Core.getCore().getConfig().getString("database.password"));
+            conn = DriverManager.getConnection("jdbc:mysql://" + Core.getCore().getConfig().getString("database.host") + ":" + Core.getCore().getConfig().getInt("database.port") + "/" + Core.getCore().getConfig().getString("database.database"), Core.getCore().getConfig().getString("database.username"), Core.getCore().getConfig().getString("database.password"));
         }
         //conn = DriverManager.getConnection("jdbc:mysql://ccl:3306/terminal", "ccl", "kPSKuLO7L0fMT5fA");
         isConnected = true;

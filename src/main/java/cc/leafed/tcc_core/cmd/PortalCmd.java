@@ -1,6 +1,6 @@
 package cc.leafed.tcc_core.cmd;
 
-import cc.leafed.tcc_core.TCC_Core;
+import cc.leafed.tcc_core.Core;
 import cc.leafed.tcc_core.common.ServerData;
 import com.thecloudyco.cc.database.CloverDatabase;
 import org.bukkit.Bukkit;
@@ -50,7 +50,7 @@ public class PortalCmd implements CommandExecutor {
                     // Some wild shit happened while trying to access the SQL database
                 }
             }
-        }.runTaskAsynchronously(TCC_Core.getCore());
+        }.runTaskAsynchronously(Core.getCore());
 
         Player pl = (Player) commandSender;
         pl.openInventory(inv);
