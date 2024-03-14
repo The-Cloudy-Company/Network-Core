@@ -1,6 +1,8 @@
 package cc.leafed.tcc_core;
 
+import cc.leafed.tcc_core.cmd.IPCmd;
 import cc.leafed.tcc_core.cmd.PortalCmd;
+import cc.leafed.tcc_core.cmd.StaffChatCmd;
 import cc.leafed.tcc_core.listener.PortalListener;
 import cc.leafed.tcc_core.membership.MembershipListener;
 import com.thecloudyco.cc.database.CloverDatabase;
@@ -18,8 +20,14 @@ public final class TCC_Core extends JavaPlugin {
         // Plugin startup logic
         core = this;
 
+        // ?
+        IPCmd ipCMD = new IPCmd();
+        StaffChatCmd staffChatCmd = new StaffChatCmd();
+
         // Register BungeeCord messaging channels
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+        getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", ipCMD);
+        getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", staffChatCmd);
 
         // Create the initial config file
         saveDefaultConfig();
@@ -35,6 +43,8 @@ public final class TCC_Core extends JavaPlugin {
 
         // Initialize Commands
         getCommand("portal").setExecutor(new PortalCmd());
+        getCommand("ip").setExecutor(ipCMD);
+        getCommand("sc").setExecutor(staffChatCmd);
 
         // Initialize Event Listeners
         Bukkit.getPluginManager().registerEvents(new MembershipListener(), this);

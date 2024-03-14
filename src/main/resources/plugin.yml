@@ -7,6 +7,17 @@ commands:
   portal:
     description: Server Selection GUI
     permission: thecloudyco.portal
+  ip:
+    description: Find the real IP address of a member
+    permission: thecloudyco.ip
+  sc:
+    description: Send a staff chat message
+    permission: thecloudyco.staff
+    aliases: ["s"]
 permissions:
   thecloudyco.portal:
     default: true
+  thecloudyco.ip:
+    default: op
+  thecloudyco.staff:
+    default: op
