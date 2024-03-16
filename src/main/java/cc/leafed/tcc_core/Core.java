@@ -3,6 +3,8 @@ package cc.leafed.tcc_core;
 import cc.leafed.tcc_core.cmd.IPCmd;
 import cc.leafed.tcc_core.cmd.PortalCmd;
 import cc.leafed.tcc_core.cmd.StaffChatCmd;
+import cc.leafed.tcc_core.hub.Hub;
+import cc.leafed.tcc_core.listener.PlayerListener;
 import cc.leafed.tcc_core.listener.PortalListener;
 import cc.leafed.tcc_core.membership.MembershipListener;
 import com.thecloudyco.cc.database.CloverDatabase;
@@ -49,6 +51,10 @@ public final class Core extends JavaPlugin {
         // Initialize Event Listeners
         Bukkit.getPluginManager().registerEvents(new MembershipListener(), this);
         Bukkit.getPluginManager().registerEvents(new PortalListener(), this);
+        if(Core.getCore().getConfig().getString("server.group").equalsIgnoreCase("hub")) {
+            Bukkit.getPluginManager().registerEvents(new Hub(), this);
+        }
+        Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
     }
 
     @Override
@@ -60,5 +66,9 @@ public final class Core extends JavaPlugin {
 
     public static Core getCore() {
         return core;
+    }
+
+    public static String getMyName() {
+        return Core.getCore().getConfig().getString("server.name");
     }
 }

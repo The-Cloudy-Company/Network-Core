@@ -57,7 +57,6 @@ public class StaffChatCmd implements CommandExecutor, PluginMessageListener {
         out.write(msgbytes.toByteArray());
 
         player.sendPluginMessage(Core.getCore(), "BungeeCord", out.toByteArray());
-
         return true;
     }
 

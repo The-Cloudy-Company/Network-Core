@@ -2,6 +2,7 @@ package cc.leafed.tcc_core.listener;
 
 import cc.leafed.tcc_core.Core;
 import cc.leafed.tcc_core.common.ServerData;
+import cc.leafed.tcc_core.common.StaffMessage;
 import com.thecloudyco.cc.util.ServerUtil;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
@@ -38,6 +39,8 @@ public class PortalListener implements Listener {
             }
 
             ((Player)ev.getWhoClicked()).sendMessage("§6Connecting you to " + serverName + "...");
+
+            //StaffMessage obj = new StaffMessage("Portal", Core.getMyName(), );
 
             // Send the player over to the server after the checks
             ByteArrayDataOutput out = ByteStreams.newDataOutput();

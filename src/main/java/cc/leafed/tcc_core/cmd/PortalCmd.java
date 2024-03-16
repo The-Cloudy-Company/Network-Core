@@ -25,10 +25,11 @@ public class PortalCmd implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
 
-        Inventory inv = Bukkit.createInventory(null, (9 * 3), "~ NETWORK PORTAL ~");
+        Inventory inv = Bukkit.createInventory(null, (9 * 5), "~ NETWORK PORTAL ~");
 
         // Pull information from the database to populate the server portal
         List<ServerData> _Servers = new ArrayList<>();
+        Player pl = (Player) commandSender;
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -44,7 +45,16 @@ public class PortalCmd implements CommandExecutor {
                         meta.setDisplayName(ChatColor.RESET + sd.getName());
                         item.setItemMeta(meta);
 
-                        inv.setItem(sd.getPosition(), item);
+                        // Don't display the server on the menu if it's staff only
+                        if(sd.isStaffOnly()) {
+                            if((pl).hasPermission("thecloudyco.staff")) {
+                                inv.setItem(sd.getPosition(), item);
+                            }
+                        } else {
+                            inv.setItem(sd.getPosition(), item);
+                        }
+
+
                     }
                 } catch(SQLException ex) {
                     // Some wild shit happened while trying to access the SQL database
@@ -52,7 +62,7 @@ public class PortalCmd implements CommandExecutor {
             }
         }.runTaskAsynchronously(Core.getCore());
 
-        Player pl = (Player) commandSender;
+
         pl.openInventory(inv);
         return true;
     }
