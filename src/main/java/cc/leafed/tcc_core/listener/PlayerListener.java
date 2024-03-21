@@ -2,7 +2,6 @@ package cc.leafed.tcc_core.listener;
 
 import cc.leafed.tcc_core.Core;
 import cc.leafed.tcc_core.common.StaffMessage;
-import cc.leafed.tcc_core.util.PacketUtil;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import com.google.gson.Gson;

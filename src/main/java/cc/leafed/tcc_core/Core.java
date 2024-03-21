@@ -1,9 +1,8 @@
 package cc.leafed.tcc_core;
 
-import cc.leafed.tcc_core.cmd.IPCmd;
-import cc.leafed.tcc_core.cmd.PortalCmd;
-import cc.leafed.tcc_core.cmd.StaffChatCmd;
+import cc.leafed.tcc_core.cmd.*;
 import cc.leafed.tcc_core.hub.Hub;
+import cc.leafed.tcc_core.listener.MembershipMenuListener;
 import cc.leafed.tcc_core.listener.PlayerListener;
 import cc.leafed.tcc_core.listener.PortalListener;
 import cc.leafed.tcc_core.membership.MembershipListener;
@@ -25,11 +24,13 @@ public final class Core extends JavaPlugin {
         // ?
         IPCmd ipCMD = new IPCmd();
         StaffChatCmd staffChatCmd = new StaffChatCmd();
+        FindCmd findCmd = new FindCmd();
 
         // Register BungeeCord messaging channels
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", ipCMD);
         getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", staffChatCmd);
+        getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", findCmd);
 
         // Create the initial config file
         saveDefaultConfig();
@@ -47,6 +48,10 @@ public final class Core extends JavaPlugin {
         getCommand("portal").setExecutor(new PortalCmd());
         getCommand("ip").setExecutor(ipCMD);
         getCommand("sc").setExecutor(staffChatCmd);
+        getCommand("find").setExecutor(findCmd);
+        getCommand("skin").setExecutor(new SkinCmd());
+        getCommand("membership").setExecutor(new MembershipCmd());
+        getCommand("hub").setExecutor(new HubCommand());
 
         // Initialize Event Listeners
         Bukkit.getPluginManager().registerEvents(new MembershipListener(), this);
@@ -55,6 +60,7 @@ public final class Core extends JavaPlugin {
             Bukkit.getPluginManager().registerEvents(new Hub(), this);
         }
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
+        Bukkit.getPluginManager().registerEvents(new MembershipMenuListener(), this);
     }
 
     @Override
@@ -62,6 +68,7 @@ public final class Core extends JavaPlugin {
         // Plugin shutdown logic
         core = null;
         getServer().getMessenger().unregisterOutgoingPluginChannel(this);
+        getServer().getMessenger().unregisterIncomingPluginChannel(this);
     }
 
     public static Core getCore() {

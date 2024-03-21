@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 public class MembershipUtil {
     public static String generateID(int length) {
@@ -54,17 +55,50 @@ public class MembershipUtil {
         return member;
     }
 
-    public boolean isExecutive(Membership member) {
-        if(member.getType() != MembershipType.PREMIUM
+    /**
+     * Find a membership from the given player's UUID
+     * @param uuid
+     * @return
+     */
+    public static Membership findMembership(UUID uuid) throws SQLException {
+        ResultSet result = CloverDatabase.query("SELECT * FROM `membership` WHERE `minecraft` = '" + uuid + "';");
+        Membership membership = null;
+        while (result.next()) {
+            membership = new Membership(result.getString("mbr_number"), result.getString("first_name"), result.getString("last_name"), result.getString("address"),
+                    result.getString("address_two"), result.getString("city"), result.getString("state"), result.getString("zip_code"),
+                    result.getString("phone_number"), result.getString("email"), result.getBoolean("is_employee"), result.getInt("points_balance"),
+                    result.getString("parent_mbrshp"), MembershipType.valueOf(result.getString("type")), result.getLong("expiration"),
+                    result.getLong("enrollment_date"), result.getString("added_by"), result.getLong("member_since"), result.getString("minecraft"));
+        }
+        return membership;
+    }
+
+    /***
+     * Check to see if a membership is premium status through the membership system
+     * Employee Memberships are automatically upgraded to premium
+     * @param member
+     * @return
+     */
+    public static boolean isExecutive(Membership member) {
+        if(member.getType() == MembershipType.PREMIUM
                 // Employee memberships do not expire
                 // Complimentary Memberships do not expire
-                || member.getType() != MembershipType.EMPLOYEE || member.getType() != MembershipType.EMPLOYEE_PREMIUM
-                || member.getType() != MembershipType.COMPLIMENTARY_PREMIUM) {
+                || member.getType() == MembershipType.EMPLOYEE || member.getType() == MembershipType.EMPLOYEE_PREMIUM
+                || member.getType() == MembershipType.COMPLIMENTARY_PREMIUM) {
             return true;
         }
         return false;
     }
-    public boolean isRevoked(Membership member) {
+
+    public static boolean isUpForRenewal(Membership membership) {
+        long tenDaysInMillis = 10 * 24 * 60 * 60 * 1000; // WE ALWAYS ASSUME IF IT EXPIRES WITHIN 10 DAYS ITS "UP FOR RENEWAL"!!!
+        if(membership.getExpiration() - System.currentTimeMillis() <= tenDaysInMillis) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean isRevoked(Membership member) {
         return member.getType() == MembershipType.REVOKED;
     }
 

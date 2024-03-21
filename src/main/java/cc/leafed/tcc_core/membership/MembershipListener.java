@@ -40,7 +40,7 @@ public class MembershipListener implements Listener {
                 }
                 if(MembershipUtil.isExpired(membership)) {
                     //new BukkitRunnable() { @Override public void run() { ev.getPlayer().kickPlayer(ChatColor.RED + "Your Membership has expired. You have to renew before playing again. \n\nManage your membership at (Membership System Website)"); } }.runTask(cc.leafed.membership.Membership.getMe());
-                    ev.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, ChatColor.RED + "Your Membership has expired. You have to renew before playing again. \n\nManage your membership at (Membership System Website)");
+                    ev.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, ChatColor.RED + "Your Membership has expired. You have to renew before playing again. \n\nManage your membership at: thecloudyco.com");
                     return;
                 }
                 if(membership.getType() == MembershipType.REVOKED) {
@@ -75,14 +75,8 @@ public class MembershipListener implements Listener {
                                 result.getString("parent_mbrshp"), MembershipType.valueOf(result.getString("type")), result.getLong("expiration"),
                                 result.getLong("enrollment_date"), result.getString("added_by"), result.getLong("member_since"), result.getString("minecraft"));
                     }
-                    long tenDaysInMillis = 10 * 24 * 60 * 60 * 1000;
-                    //TODO: Also check the payment system to see if the member has a payment card on file for auto-renewal.
-
-                    // if(membership.getExpiration() - System.currentTimeMillis() <= tenDaysInMillis && membership.getExpiration() - System.currentTimeMillis() > 0) {
-                    if(membership.getExpiration() - System.currentTimeMillis() <= tenDaysInMillis) {
-                        // Membership expires within the next 10 days
-                        // Let the member know that they are up for renewal, and how to renew their membership
-                        event.getPlayer().sendMessage("§6§lHEY! §r§6It looks like your membership is up for renewal! Renew today at: {Membership System Online}");
+                    if(MembershipUtil.isUpForRenewal(membership)) {
+                        event.getPlayer().sendMessage("§6§lHEY! §r§6It looks like your membership is up for renewal! Run /membership to renew today!");
                     }
                 } catch(SQLException ex) { ex.printStackTrace(); }
             }

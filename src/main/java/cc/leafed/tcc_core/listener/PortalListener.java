@@ -33,12 +33,12 @@ public class PortalListener implements Listener {
             // Verify if the server is staff only
             if(serverData.isStaffOnly()) {
                 if(!((Player)ev.getWhoClicked()).hasPermission("thecloudyco.staff")) {
-                    ((Player)ev.getWhoClicked()).sendMessage("§cYou are not allowed to join this server.");
+                    ((Player) ev.getWhoClicked()).sendMessage("§cYou are not allowed to join this server.");
                     return;
                 }
             }
 
-            ((Player)ev.getWhoClicked()).sendMessage("§6Connecting you to " + serverName + "...");
+            ((Player) ev.getWhoClicked()).sendMessage("§6Connecting you to " + serverName + "...");
 
             //StaffMessage obj = new StaffMessage("Portal", Core.getMyName(), );
 

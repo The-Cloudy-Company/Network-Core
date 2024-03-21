@@ -15,10 +15,22 @@ commands:
     description: Send a staff chat message
     permission: thecloudyco.staff
     aliases: ["s"]
+  find:
+    description: Find what server a given player is connected to
+    permission: thecloudyco.find
+  skin:
+    description: Update your current Minecraft skin
+    permission: thecloudyco.staff
+  membership:
+    description: Access your membership details
+  hub:
+    description: Send yourself back to the hub
 permissions:
   thecloudyco.portal:
     default: true
   thecloudyco.ip:
     default: op
   thecloudyco.staff:
+    default: op
+  thecloudyco.find:
     default: op
